@@ -1,0 +1,216 @@
+.App {
+  text-align: center;
+  height: 100vh;
+}
+
+.label-color{
+  color: rgba(255,193,25,0.5) !important;
+}
+
+.login-container, .signup-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+  padding: 8px;
+  background-color: #1b1b1b;
+  color: white;
+  height: 100%;
+}
+
+.input-field{
+  display: flex;
+  align-items: center;
+  margin: 18px;
+}
+
+.icon{
+  height: 24px;
+  width: 24px;
+  margin-right: 8px;
+}
+
+.register{
+  text-decoration: underline;
+}
+
+.register:hover{
+  cursor: pointer;
+}
+
+.heading-container{
+  font-size: 40px;
+  color: white;
+  font-weight: 500;
+  font-family: Montserrat,Arial;
+  padding: 8px;
+}
+
+.sub-container{
+  display: flex;
+}
+
+.image-container{
+  width: 20%;
+  margin: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image{
+  border-radius: 5px;
+  margin: 3rem;
+  height: 360px;
+  width: 250px;
+  box-shadow: 0px 0px 21px -3px rgba(0,0,0,0.75);
+}
+
+.details-container{
+  background-color: #1b1b1b;
+  height: 100%;
+}
+
+.main-container{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-top: 64px;
+  width: 50%;
+}
+
+.trailer{
+  font-family: Montserrat,Arial;
+  font-weight: 700;
+  padding: 12px 26px;
+  text-decoration: none;
+  background-color: rgb(255,193,25);
+  color: white;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px 0 0 32px;
+}
+
+.trailer:hover{
+  background-color: rgb(240,170,10);
+}
+
+.description{
+  font-weight: 300;
+  font-size: 16px;
+  font-family: Montserrat, Arial;
+  color: #fff;
+  margin: 2rem;
+  text-align: left;
+}
+
+.genre{
+  color: #fff;
+  font-family: Montserrat,Arial;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 1.1em;
+  padding: 4px 8px;
+  border: 1px solid rgba(255,255,255,.4);
+  border-radius: 20px;
+  margin: 0 2px 5px 0;
+}
+
+
+.details, .other-details{
+  color: #fff;
+  font-family: Montserrat,Arial;
+  line-height: 1.1em;
+  margin: 0.5rem;
+}
+
+.right-container{
+  width: calc(25% - 30px);
+  overflow: hidden;
+  margin: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.reviews-container{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: -24px 24px 24px 24px; 
+}
+
+.reviews{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 8px 8px 56px 8px;
+  border: 1px solid rgb(240,170,10, 0.30);
+  border-radius: 4px;
+  background-color: rgba(255,255,255,.1);
+  width: 100%;
+}
+
+.review-element{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 8px 8px 4px;
+  border-top: 1px solid rgb(240,170,10, 0.30);
+  width: 70%;
+  height: auto;
+}
+
+.genres{
+  padding: 10px 0 5px;
+  border-top: 1px solid rgba(255,255,255,.1);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+@media only screen and (max-width: 1024px){
+  .image-container{
+    margin-right: 38px;
+    width: 30%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .heading-container{
+    font-size: 30px;
+  }
+  .image-container{
+    width: 80%;
+  } 
+  .sub-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .main-container{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  .right-container{
+    width: 80%;
+  }
+  .trailer{
+    margin: 0;
+  }
+  .loading{
+    width: 100%;
+    height: 100vh;
+  }
+}
+#sign-login {
+  width: 50px;
+  height: 25px;
+}
