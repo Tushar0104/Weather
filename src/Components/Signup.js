@@ -63,10 +63,17 @@ const Signup = (props) => {
             'Content-Type': 'application/json',
         }})
       .then(res=>{
-        // if(res.data==="User Added"){
-        //   props.history.push("/");
-        // }
-        console.log(res)
+        if(res.data.code===200){
+          setAlertVar(res.data.message);
+          setOpen(true);
+          props.history.push("/");
+        } else if (res.data.code===300) {
+          setAlertVar(res.data.message);
+          setOpen(true);
+        }else{
+          setAlertVar("Something Bad Happened");
+          setOpen(true);
+        }
       });
     }else if(obj.username==="" || obj.password==="" || obj.email===""){
       setAlertVar("Please Fill All Details");

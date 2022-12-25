@@ -12,6 +12,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 }
+from 'react-html-parser';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -43,6 +45,8 @@ const Login = (props) => {
     const [password, setPassword] = useState("");
     const [open, setOpen] = useState(false);
     const [alertVar, setAlertVar] = useState('');
+    const [template, setTemplate] = useState("");
+    const [status, setStatus] = useState(0);
     
     const obj = {
       "username": username,
@@ -54,73 +58,98 @@ const Login = (props) => {
     };
     
     function handleClick(){
-      // if(obj.username!=="" && obj.password!=="" && obj.email!==""){
-      //   axios.post("https://anime-website-project.herokuapp.com/home/login", obj)
-      //   .then(res=>{
-      //     if(res.data==="Login Successfully"){
-      //       props.history.push(`/home/${username}`);
-      //     }else if(res.data === "Username And Password Do Not Match"){
-      //       setAlertVar(res.data);
-      //       setOpen(true);
-      //     }
-      //   });
-      // }else
-      if(obj.username==="" || obj.password==="" || obj.email===""){
+      if(obj.username!=="" && obj.password!==""){
+        axios.get('http://127.0.0.1:8000/authenticate-user/',{
+          params:obj
+        },{
+          headers: {
+              'Content-Type': 'application/json',
+          }})
+        .then(res=>{
+          if(res.status===200){
+            if (res && res.data && res.data.code==300){ 
+              setAlertVar(res.data.message);
+              setOpen(true);
+              setStatus(res.data.code)
+            }
+            else{
+              setTemplate(res.data)
+              setStatus(res.status)
+            }
+
+          }
+          else{
+            setAlertVar("Something Bad Happened");
+            setOpen(true);
+          }
+        });
+      }else if(obj.username==="" || obj.password==="" ){
         setAlertVar("Please Fill All Details");
         setOpen(true);
       }
     }
     return (
-      <div style={{height:"100%"}}>
-        <div className="login-container">
-            <div className="input-field">
-              <PersonIcon className="icon" />  
+      <>
+      { status==200 ? (
+        <>
+          {
+            template && <> { ReactHtmlParser(template) }</>
+          }
+        </>
+      ) : (
+        <div style={{height:"100%"}}>
+          <div className="login-container">
+              <div className="input-field">
+                <PersonIcon className="icon" />  
+                <RedditTextField
+                  label="Username"
+                  InputLabelProps={{className:"label-color"}}
+                  onChange={(e)=>setUsername(e.target.value)}
+                  required
+                  id="reddit-input"
+                  variant="filled"
+                  value={username}
+                />
+              </div>
+              <div className="input-field">
+              <LockIcon className="icon" />
               <RedditTextField
-                label="Username"
+                label="Password"
+                type="password"
                 InputLabelProps={{className:"label-color"}}
-                onChange={(e)=>setUsername(e.target.value)}
+                onChange={(e)=>setPassword(e.target.value)}
                 required
                 id="reddit-input"
                 variant="filled"
-                value={username}
-              />
-            </div>
-            <div className="input-field">
-            <LockIcon className="icon" />
-            <RedditTextField
-              label="Password"
-              type="password"
-              InputLabelProps={{className:"label-color"}}
-              onChange={(e)=>setPassword(e.target.value)}
-              required
-              id="reddit-input"
-              variant="filled"
-              value={password}
-          />
-            </div>
-            <Button style={{backgroundColor:"#ffc119"}} onClick={()=>{handleClick()}} variant="contained" size="large">
-              Login
-            </Button>
-            <h4>Not Yet A User? <span className="register" onClick={()=>props.history.push("/signup")}>Register Here</span></h4>
+                value={password}
+            />
+              </div>
+              <Button style={{backgroundColor:"#ffc119"}} onClick={()=>{handleClick()}} variant="contained" size="large">
+                Login
+              </Button>
+              <h4>Not Yet A User? <span className="register" onClick={()=>props.history.push("/signup")}>Register Here</span></h4>
+          </div>
+          <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          aria-describedby="alert-dialog-slide-description"
+          >
+            <DialogTitle>{"Attention!"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-slide-description">
+                {alertVar}
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>OK</Button>
+            </DialogActions>
+          </Dialog>
         </div>
-        <Dialog
-        open={open}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-        >
-          <DialogTitle>{"Attention!"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              {alertVar}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>OK</Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+      )}
+     </>
+
     )
 }
 
